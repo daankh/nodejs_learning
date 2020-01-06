@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 // const pathToFile = path.join(__dirname, 'index.js');
 // const pathToFile = __dirname + '\\' + 'index.js';
@@ -19,7 +19,7 @@ const path = require('path');
 // console.log(path.isAbsolute('/file.js'));
 // console.log(path.isAbsolute('file.js'));
 
-const os = require('os');
+const os = require("os");
 
 const uptime = os.uptime();
 console.log(uptime);
