@@ -1,0 +1,1 @@
+const colors = requires("./colors");
