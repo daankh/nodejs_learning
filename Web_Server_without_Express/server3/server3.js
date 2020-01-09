@@ -12,6 +12,9 @@ const users = [
 http
   .createServer((req, res) => {
     switch (req.url) {
+      case "/favicon.ico":
+        res.end();
+        return;
       case "/":
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
         fs.readFile(path.join(__dirname, "index.html"), (err, page) => {
