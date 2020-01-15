@@ -4,11 +4,19 @@ const h2 = document.querySelector("h2");
 
 function fillQuestionElements(data) {
   if (data.winner === true) {
-    gameBoard.getElementsByClassName.display = "none";
+    gameBoard.style.display = "none";
     h2.innerText = "WYGRAŁEŚ!!!";
     return;
   }
+
+  if (data.loser === true) {
+    gameBoard.style.display = "none";
+    h2.innerText = "Nie poszło tym razem, spróbuj ponownie!!!";
+    return;
+  }
+
   question.innerText = data.question;
+
   for (const i in data.answers) {
     const answerEl = document.querySelector(`#answer${Number(i) + 1}`);
     answerEl.innerText = data.answers[i];
@@ -35,7 +43,7 @@ showNextQuestion();
 
 const goodAnswersSpan = document.querySelector("#good-answers");
 
-function handleANswerFeedback(data) {
+function handleAnswerFeedback(data) {
   goodAnswersSpan.textContent = data.goodAnswers;
   showNextQuestion();
 }
@@ -52,7 +60,7 @@ function sendAnswer(answerIndex) {
       }
     })
     .then(data => {
-      handleANswerFeedback(data);
+      handleAnswerFeedback(data);
     });
 }
 
