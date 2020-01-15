@@ -24,7 +24,7 @@ db.clients.find({ $or: [{age: {$lte: 30}}, {active: true}]}) => age mniejszy lub
 db.clients.find({age: {$not: {$gt: 30}}}) => age nie wiekszy niz 30
 
 Aktualizowanie danych:
-db.clients.update({warunki wyszukania{, {co ma byc zmienione lub czym nadpisac calosc}, {dodatkowe opcje})
+db.clients.update({warunki wyszukania}, {co ma byc zmienione lub czym nadpisac calosc}, {dodatkowe opcje})
 db.clients.update({}, {active: true}) => nadpisuje caly dokument
 db.clients.update({}, {$set: {active: true}}) => nadpisuje tylko podane wlasciwosci dla pierwszego znalezionego dokumentu
 db.clients.update({}, {$set: {active: true}}, {multi: true}) => nadpisuje tylko podane wlasciwosci dla wszystkich dokumentow
