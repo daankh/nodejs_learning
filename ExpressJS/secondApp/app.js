@@ -1,3 +1,7 @@
+//ecpress-generator - tworzy z linii komend podstawową strukturę aplikacji Express.js
+// npm install express-generator -g
+// express --no-view --git nazwa_projektu_i_folderu
+
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
