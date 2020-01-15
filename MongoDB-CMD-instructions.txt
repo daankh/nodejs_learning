@@ -1,0 +1,35 @@
+mongo => uruchamiane w folderze C:\Program Files\MongoDB\Server\4.2\bin => wersja mongoDB i czy połączono
+
+db => nazwa aktualnej bazy danych
+
+Wprowadzanie danych do kolekcji:
+db.cars.insertOne({brand: 'Daewoo', model:'Lanos'}) => wstawienie jednego obiektu do kolekcji cars dokumentu {brand: 'Daewoo', model:'Lanos'} 
+
+db.cars.insertMany([ {brand: 'Polonez', model: 'Caro'}, {brand: 'Polonez', model: 'Caro Plus'} ]) => dodanie wielu elementów do kolekcji car, używamy notacji tablicowej
+
+db.cars.find() => odpytanie do bazy danych, bez parametrow pobiera wszystkie elementy z kolekcji
+db.cars.find({brand: 'Polonez'}) => wybiera z kolekcji tylko te elementy, ktore mają wartość Polonez w polu brand. Można poać więcej
+db.clients.find({ _id: ObjectId('5e1f795ccd352f4fe9828370') }) => wyszukiwanie po Id
+
+Bardziej zaawansowane wyszukiwanie:
+db.clients.find({ age: {$gt: 30}}) => $gt - większe niż
+db.clients.find({ age: {$lt: 30}}) => $lt - mniejsze niż
+db.clients.find({ age: {$gt: 30, $lt: 40}}) => większy niż 30 i mniejszy niż 40
+db.clients.find({ age: {$gte: 30}}) => $gte - większe lub równe
+db.clients.find({ age: {$lte: 30}}) => $lte - mniejsze lub równe
+db.clients.find({ age: {$in: [25, 30, 30]}}) => $lte - wyszukuje z podanego zbioru wartosci
+db.clients.find({ age: {$nin: [25, 30, 30]}}) => $lte - wyszukuje spoza podanego zbioru wartosci
+db.clients.find({ age: {$gt: 30}, active: true}) => age większy niż 25 i active o wartości true
+db.clients.find({ $or: [{age: {$lte: 30}}, {active: true}]}) => age mniejszy lub równy 30 LUB active = true
+db.clients.find({age: {$not: {$gt: 30}}}) => age nie wiekszy niz 30
+
+Aktualizowanie danych:
+db.clients.update({warunki wyszukania{, {co ma byc zmienione lub czym nadpisac calosc}, {dodatkowe opcje})
+db.clients.update({}, {active: true}) => nadpisuje caly dokument
+db.clients.update({}, {$set: {active: true}}) => nadpisuje tylko podane wlasciwosci dla pierwszego znalezionego dokumentu
+db.clients.update({}, {$set: {active: true}}, {multi: true}) => nadpisuje tylko podane wlasciwosci dla wszystkich dokumentow
+db.clients.update({_id : ObjectId('5e1f795ccd352f4fe9828370')}, {active: true, name: 'Anna Kowalska', age: 45}) => nadpisuje obiekt o zadanym id (moze byc inny warunek) wartosciami {active: true, name: 'Anna Kowalska', age: 45
+Można użyć też updateOne lub updateMany
+
+Usuwanie (delete, deleteOne, deleteMany)
+W zapisie jak find
