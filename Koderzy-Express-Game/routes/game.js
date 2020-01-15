@@ -3,7 +3,7 @@ function gameRoutes(app) {
   let isGameOver = false;
   let callToAFriendUsed = false;
   let questionToTheCrowdUsed = false;
-  let halfOnHalf = false;
+  let halfOnHalfUsed = false;
 
   const questions = [
     {
@@ -68,6 +68,45 @@ function gameRoutes(app) {
     res.json({
       correct: isGoodAnswer,
       goodAnswers
+    });
+  });
+
+  app.get("/help/friend", (req, res) => {
+    if (callToAFriendUsed) {
+      return res.json({
+        text: "To koło ratunkowe było już wykorzystane"
+      });
+    }
+
+    callToAFriendUsed = true;
+    const doesFriendKnowAnswer = Math.random() < 0.5;
+    const question = questions[goodAnswers];
+
+    res.json({
+      text: doesFriendKnowAnswer
+        ? `Hmm, wydaje mi się, że odpowiedź to ${
+            question.answers[question.corectAnswer]
+          }`
+        : "Mhh, no nie wiem..."
+    });
+  });
+
+  app.get("/help/half", (req, res) => {
+    if (halfOnHalfUsed) {
+      return res.json({
+        text: "To koło ratunkowe było już wykorzystane"
+      });
+    }
+
+    halfOnHalfUsed = true;
+    const question = questions[goodAnswers];
+    const answersCopy = question.answers.filter(
+      (s, index) => index !== question.corectAnswer
+    );
+    answersCopy.splice(~~(Math.random() * answersCopy.length), 1);
+
+    res.json({
+      answersToRemove: answersCopy
     });
   });
 }

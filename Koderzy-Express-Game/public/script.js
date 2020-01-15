@@ -64,10 +64,66 @@ function sendAnswer(answerIndex) {
     });
 }
 
-const buttons = document.querySelectorAll("button");
+const buttons = document.querySelectorAll(".answer-button");
 for (const button of buttons) {
   button.addEventListener("click", e => {
     const answerIndex = e.target.dataset.answer;
     sendAnswer(answerIndex);
   });
 }
+
+const tipDiv = document.querySelector("#tip");
+
+const handleFriendsAnswer = data => {
+  tipDiv.innerText = data.text;
+};
+
+function callToAFirend() {
+  fetch(`/help/friend`, {
+    method: "GET"
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Cannot fetch data");
+      }
+    })
+    .then(data => {
+      handleFriendsAnswer(data);
+    });
+}
+
+document
+  .querySelector("#callToAFriend")
+  .addEventListener("click", callToAFirend);
+
+const handleHalfOnHalfAnswer = data => {
+  if (typeof data.text === "string") {
+    tipDiv.innerText = data.text;
+  } else {
+    for (const button of buttons) {
+      if (data.answersToRemove.indexOf(button.innerText) > -1) {
+        button.innerText = "";
+      }
+    }
+  }
+};
+
+function halfOnHalf() {
+  fetch(`/help/half`, {
+    method: "GET"
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Cannot fetch data");
+      }
+    })
+    .then(data => {
+      handleHalfOnHalfAnswer(data);
+    });
+}
+
+document.querySelector("#halfOnHalf").addEventListener("click", halfOnHalf);
